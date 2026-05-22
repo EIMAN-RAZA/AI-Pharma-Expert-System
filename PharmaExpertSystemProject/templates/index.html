@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pharma Expert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function addInputField() {
+            const inputGroup = document.createElement("div");
+            inputGroup.className = "input-group";
+            inputGroup.innerHTML = `
+                <input type="text" name="disease" class="form-control" placeholder="Enter disease">
+                <button type="button" onclick="removeInputField(this)" class="btn btn-danger">−</button>
+            `;
+            document.getElementById("input-fields").appendChild(inputGroup);
+        }
+
+        function removeInputField(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Pharma Expert System</h2>
+        <form method="POST">
+            <div id="input-fields">
+                <div class="input-group">
+                    <input type="text" name="disease" class="form-control" placeholder="Enter disease">
+                    <button type="button" onclick="addInputField()" class="btn btn-success">+</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Find Medicines</button>
+        </form>
+
+        {% if medicines %}
+            <div class="medicine-box">
+                <h3>Recommended Medicines</h3>
+                <ul>
+                    {% for disease, med in medicines %}
+                        <li><strong>{{ disease.capitalize() }}:</strong> {{ med }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
